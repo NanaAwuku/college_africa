@@ -38,6 +38,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["colors", "npm:1.4.0"],
             ["dotenv", "npm:16.0.3"],
             ["express", "npm:4.18.2"],
+            ["express-async-handler", "npm:1.2.0"],
             ["mysql2", "npm:3.2.4"],
             ["nodemon", "npm:2.0.22"]
           ],
@@ -344,6 +345,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["colors", "npm:1.4.0"],
             ["dotenv", "npm:16.0.3"],
             ["express", "npm:4.18.2"],
+            ["express-async-handler", "npm:1.2.0"],
             ["mysql2", "npm:3.2.4"],
             ["nodemon", "npm:2.0.22"]
           ],
@@ -642,6 +644,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["type-is", "npm:1.6.18"],
             ["utils-merge", "npm:1.0.1"],
             ["vary", "npm:1.1.2"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["express-async-handler", [
+        ["npm:1.2.0", {
+          "packageLocation": "./.yarn/cache/express-async-handler-npm-1.2.0-475fa8a2fc-ab9ebba8b8.zip/node_modules/express-async-handler/",
+          "packageDependencies": [
+            ["express-async-handler", "npm:1.2.0"]
           ],
           "linkType": "HARD",
         }]
