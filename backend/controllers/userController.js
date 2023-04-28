@@ -1,10 +1,9 @@
-// const asyncHandler = require('express-async-handler')
 const pool = require("../database/index");
 const validation = require('../middleWare/validationMiddleware')
 const userSchema = require('../validations/userValidation')
-const bcrypt = require('bcrypt');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs')
+
+const router = require("../routes/userRoutes");
 
 // @desc Register new user
 // @route POST /api/users
@@ -40,31 +39,26 @@ const registerUser = async (req, res) => {
 // @route POST /api/users/login
 const loginUser = async (req, res) => {
   try {
-    await schema.validate(req.body);
-    // form submission 
-     const sql = "SELECT * FROM ca_users WHERE USR_EMAIL = ?";
-     const [rows, fields] = await pool.query(sql, [req.body.email]);
-     const user = rows[0];
- 
-     // Check if user exists in the database
-     if (!user) {
-       return res.status(401).json({ error: "Invalid email or password" });
-     }
- 
-     // Compare the user password with the hashed password in the database
-     const match = await bcrypt.compare(req.body.password, user.USR_PASSWORD);
-     if (!match) {
-       return res.status(401).json({ error: "Invalid email or password" });
-     }
-
-     res.status(200).json({
-       message: "Login successful",
-    
-     });
-   } catch (error) {
-     return res.status(400).json({ error: error.message });
+    const { email, password } = req.body;
+    const sql = "SELECT * FROM ca_users WHERE USR_EMAIL = ?";
+    const [rows, fields] = await pool.query(sql, [email]);
+    if (rows.length === 0) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    const user = rows[0];
+    const passwordMatch = await bcrypt.compare(password, user.USR_PASSWORD);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    req.session.user = { id: user.USR_ID, name: user.USR_NAME };
+    res.status(200).json({ message: "Login successful", data: req.session.user });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
   }
 };
+
+// Route for guest users to view app links
+
 
 module.exports = {
   registerUser,

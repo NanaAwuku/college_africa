@@ -1,7 +1,8 @@
 const express = require('express')
 const dotenv = require('dotenv').config()
 const port = process.env.PORT || 5000
-
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const app = express()
 
@@ -10,9 +11,9 @@ app.use(express.urlencoded({extended: false}))
 
 app.use(cookieParser());
 app.use(session({
-  secret: 'mysecret', // set a secret to sign the session ID cookie
-  resave: false, // don't save the session if it hasn't been modified
-  saveUninitialized: false, // don't create a session until something is stored
+  secret: 'mysecret', 
+  resave: false, 
+  saveUninitialized: false, 
 }));
 
 app.use('/api/users', require('./routes/userRoutes'))

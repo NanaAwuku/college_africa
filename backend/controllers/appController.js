@@ -19,6 +19,7 @@ const createApp = async (req, res) => {
       const [rows, fields] = await pool.query(sql, [values]);
       res.json({
         data: rows,
+        message:"account successfuly created",
       });
     }
   } catch (error) {
@@ -41,6 +42,7 @@ const updateApp = async (req, res) => {
       const [rows, fields] = await pool.query(sql, values);
       res.json({
         data: rows,
+        message:"account successfuly Updated",
       });
     }
   } catch (error) {
@@ -55,6 +57,7 @@ const deleteApp = async (req, res) => {
     const [rows, fields] = await pool.query(sql, [appId]);
     res.json({
       data: rows,
+      message:"account successfuly deleted",
     });
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -67,6 +70,7 @@ const listApps = async (req, res) => {
     const [rows, fields] = await pool.query(sql);
     res.json({
       data: rows,
+      message: "all items fetched successfully"
     });
   } catch (error) {
     return res.status(400).json({ error: error.message });
